@@ -1,0 +1,8 @@
+services:
+  rails:
+    build:
+      dockerfile: Dockerfile.dev
+    ports:
+      - ${RAILS_PORT_OUT}:${RAILS_PORT}
+    volumes:
+      - ./friends:/app

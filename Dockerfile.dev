@@ -1,0 +1,22 @@
+FROM ruby:3.2.3-slim
+
+ENV LANG=C.UTF-8
+
+# Working directory
+ENV APP_HOME=/app
+WORKDIR /app
+
+# Install 3rd party dependencies.
+RUN apt update && apt -y install build-essential pkg-config libpq-dev libvips postgresql-client git yarn nodejs
+
+# Update bundler
+RUN gem install bundler
+
+# Install Gems
+COPY ./friends/Gemfile Gemfile
+COPY ./friends/Gemfile.lock Gemfile.lock
+RUN bundle install
+
+EXPOSE 3000
+
+RUN rm -f /app/tmp/pids/server.pids
